@@ -1,0 +1,15 @@
+<class 'list'>
+collaborative False
+description Indie, pop, and everything in between to bring you good energy and good vibes. 
+external_urls {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DXca8AyWK6Y7g'}
+href https://api.spotify.com/v1/playlists/37i9dQZF1DXca8AyWK6Y7g
+id 37i9dQZF1DXca8AyWK6Y7g
+images [{'height': None, 'url': 'https://i.scdn.co/image/ab67706f000000038b84bcf93333298ce1531447', 'width': None}]
+name young & free
+owner {'display_name': 'Spotify', 'external_urls': {'spotify': 'https://open.spotify.com/user/spotify'}, 'href': 'https://api.spotify.com/v1/users/spotify', 'id': 'spotify', 'type': 'user', 'uri': 'spotify:user:spotify'}
+primary_color None
+public False
+snapshot_id MTYyNDA2OTU4NSwwMDAwMDAwMGQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0Mjdl
+tracks {'href': 'https://api.spotify.com/v1/playlists/37i9dQZF1DXca8AyWK6Y7g/tracks', 'total': 100}
+type playlist
+uri spotify:playlist:37i9dQZF1DXca8AyWK6Y7g
