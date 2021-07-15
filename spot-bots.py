@@ -65,18 +65,40 @@ class SorterBot(SpotifyBot):
 
 
     def sort_liked_playlist():
+        # get liked library songs
+        # get playlists
+        # get tracks for each playlist
+        # for each track in liked library,
+            # if track.artist is not a playlist
+                # create playlist w/ artist name
+                # add track to playlist
+            # else
+                # get corresponding playlist tracks
+                # if current track in playlist tracks
+                    # next
+                # else
+                    # add track to playlist
+            # remove current track from liked library
         pass
 
 
 
 
 class SaverBot(SpotifyBot):
+
+
     def __init__(self, auth):
         super(SaverBot, self).__init__(auth)
+        self.discover_uri = 'spotify:playlist:37i9dQZEVXcDpi5Jo3ptNB'
 
     def get_discover_tracks(pid):
-        pass
+        self.discover_tracks = self.get_playlist_tracks(self.discover_uri)
 
     def save_discover_tracks(pid):
-        pass
-
+        # create new discovered playlist
+        import time
+        pname = '{}-Discover Weekly'.format('''time string''')
+        descr = 'A previous Discover weekly playlist from spotify'
+        new_playlist = self.auth.spotify.user_playlist_create(self.auth.spotify.current_user(), pname, public=False, description=descr)
+        return new_playlist
+        # save discover tracks to specified playlist (pid)
