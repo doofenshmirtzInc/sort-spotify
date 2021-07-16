@@ -8,26 +8,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from secrets import SECRETS
 
 
-
-
 if __name__ == "__main__":
-    
-    if len(sys.argv) != 2:
-        print('fuck u doin?')
-
-
-    arg = sys.argv[1]
-    if arg in ('-h', '--help'):
-        print('help')
-    if arg in ('-s', '--sort'):
-        # sorting route
-        pass
-    if arg in ('-d', '--discover'):
-        # discover route
-        pass
-
-
-
 
 
     SCOPES = [
@@ -39,3 +20,4 @@ if __name__ == "__main__":
     ]
 
 
+    SaverBot(AUTH(scopes, *SECRETS['discover'])).save_discover_tracks()

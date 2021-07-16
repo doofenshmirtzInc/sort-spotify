@@ -21,7 +21,7 @@ class SpotifyBot(object):
         self.auth = auth
 
 
-    def get_liked_library():
+    def get_liked_library(self):
         results = self.auth.spotify.current_user_saved_tracks()
         tracks = [item['track'] for item in results['items']]
         while results['next']:
@@ -31,17 +31,17 @@ class SpotifyBot(object):
         return list(map(Track, tracks))
 
 
-    def get_user_playlists():
+    def get_user_playlists(self):
         results = self.auth.spotify.current_user_playlists()
         playlists = results['items']
         while results['next']:
             results = self.auth.spotify.next(results)
             playlists.extend(results['items'])
 
-        return list(map(Playlist, playlists))
+        return [Playlist(p, self.auth.spotify) for p in playlists]
 
 
-    def get_playlist_tracks(pid):
+    def get_playlist_tracks(self, pid):
         results = self.auth.spotify.playlist_tracks(pid)
         tracks = [item['track'] for item in results['items']]
         while results['next']:
@@ -51,7 +51,7 @@ class SpotifyBot(object):
         return list(map(Track, tracks))
 
 
-    def save_tracks_to_playlist(pid, tracks):
+    def save_tracks_to_playlist(self, pid, tracks):
         self.auth.spotify.user_playlist_add_tracks(self.auth.spotify.current_user(), pid, tracks)
 
 
@@ -64,7 +64,7 @@ class SorterBot(SpotifyBot):
         super(SorterBot, self).__init__(auth)
 
 
-    def sort_liked_playlist():
+    def sort_liked_playlist(self):
         # get liked library songs
         # get playlists
         # get tracks for each playlist
@@ -91,14 +91,15 @@ class SaverBot(SpotifyBot):
         super(SaverBot, self).__init__(auth)
         self.discover_uri = 'spotify:playlist:37i9dQZEVXcDpi5Jo3ptNB'
 
-    def get_discover_tracks(pid):
-        self.discover_tracks = self.get_playlist_tracks(self.discover_uri)
+    def get_discover_tracks(self):
+        return self.get_playlist_tracks(self.discover_uri)
 
-    def save_discover_tracks(pid):
-        # create new discovered playlist
+    def save_discover_tracks(self):
         import time
-        pname = '{}-Discover Weekly'.format('''time string''')
+
+        pname = '{} Discover Weekly'.format(time.strftime('%Y_%m_%d'))
         descr = 'A previous Discover weekly playlist from spotify'
-        new_playlist = self.auth.spotify.user_playlist_create(self.auth.spotify.current_user(), pname, public=False, description=descr)
-        return new_playlist
-        # save discover tracks to specified playlist (pid)
+        tracks = list(map(lambda t: t.uri, self.get_discover_tracks()))
+        p = Playlist( self.auth.spotify.user_playlist_create(self.auth.spotify.current_user()['id'], pname, public=False, description=descr), self.auth.spotify )
+
+        self.auth.spotify.user_playlist_add_tracks(self.auth.spotify.current_user()['id'], p.uri, tracks)

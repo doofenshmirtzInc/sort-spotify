@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 
 class AUTH(object):
-    def __init__(self, cid, secret, redirect, scope):
+    def __init__(self, scope, cid, secret, redirect):
         super(AUTH, self).__init__()
         self.cid = cid
         self.secret = secret
@@ -28,7 +28,7 @@ class Playlist(object):
         self.id = playlist['id']
         self.name = playlist['name']
         self.snapshot_id = playlist['snapshot_id']
-        self.tracks = _get_tracks()
+        self.tracks = self._get_tracks(spotify)
 
         self.collab = playlist['collaborative']
         self.description = playlist['description']
@@ -38,8 +38,8 @@ class Playlist(object):
         self.public = playlist['public']
 
 
-    def _get_tracks(spotify):
-        results = spotify.get_playlist_tracks(self.id)
+    def _get_tracks(self, spotify):
+        results = spotify.playlist_tracks(self.id)
         tracks = [item['track'] for item in results['items']]
         while results['next']:
             results = spotify.next(results)
