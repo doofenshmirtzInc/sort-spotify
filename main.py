@@ -3,7 +3,8 @@
 import os
 import sys
 import spotipy
-from wrappers import Playlist, Track
+from spotbots import SaverBot, SorterBot
+from wrappers import AUTH, Playlist, Track
 from spotipy.oauth2 import SpotifyOAuth
 from secrets import SECRETS
 
@@ -11,7 +12,7 @@ from secrets import SECRETS
 if __name__ == "__main__":
 
 
-    SCOPES = [
+    scopes = [
         'user-library-read',
         'user-library-modify',
         'playlist-modify-public',
